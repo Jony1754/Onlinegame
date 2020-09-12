@@ -1,0 +1,20 @@
+{
+  "name": "unnamed_game",
+  "version": "1.0.0",
+  "description": "Primeros pasos del juego haciendo uso de la Phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JavaScript",
+    "Phaser",
+    "Sockets",
+    "Hilos"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^3.24.1"
+  }
+}
