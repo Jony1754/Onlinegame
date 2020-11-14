@@ -1,3 +1,26 @@
+// ELEMENTOS RENDERIZABLES (FLECHAS)
+var up;
+var down;
+var right;
+var left;
+
+var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
+
+//TEXTOS
+var score = 0;
+var scoreText;
+var userName;
+var userNameText;
+
+var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
+
+var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS
+var square; // INSTANCIA DEL CUADRADO, SOLO SE USA UNA
+
+var renderedElements = new Array(); // ELEMENTOS QUE HAN SIDO DIBUJADOS
+var over = false;
+var overItem; // ELEMENTO ACTUALMENTE SUPERPUESTO CON EL CUADRADO
+
 var config = {
   type: Phaser.AUTO,
   height: window.innerHeight,
@@ -15,27 +38,10 @@ var config = {
     update: update,
   },
 };
+var game = new Phaser.Game(config);
 
 var arrows = ["up", "down", "left", "right"]; // VALORES PARA COMPARAR
 var secuence = new Array(); // SECUENCIA A REPETIR
-
-// ELEMENTOS RENDERIZABLES (FLECHAS)
-var up;
-var down;
-var right;
-var left;
-
-var game = new Phaser.Game(config);
-var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
-var score = 0;
-var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
-
-var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS
-var square; // INSTANCIA DEL CUADRADO, SOLO SE USA UNA
-
-var renderedElements = new Array(); // ELEMENTOS QUE HAN SIDO DIBUJADOS
-var over = false;
-var overItem; // ELEMENTO ACTUALMENTE SUPERPUESTO CON EL CUADRADO
 
 function preload() {
   this.load.spritesheet("arr-up", "src/assets/up-arrow.png", {
@@ -71,6 +77,10 @@ function create() {
   console.log(secuence);
   // console.log(getElementInSecuence());
   keys = this.input.keyboard.createCursorKeys();
+  scoreText = this.add.text(16, 16, "score: 0", {
+    font: "48px Consolas",
+    fill: "#FFF",
+  });
 }
 
 function getElementInSecuence() {
@@ -139,13 +149,16 @@ function update() {
     if (keys.left.isDown && overItem.key == "left") {
       // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
       score++;
-      console.log("Scored! +", score);
+      scoreText.setText("Score: " + score);
     } else if (keys.right.isDown && overItem.key == "right") {
-      console.log("Scored! +", score);
+      score++;
+      scoreText.setText("Score: " + score);
     } else if (keys.down.isDown && overItem.key == "down") {
-      console.log("Scored! +", score);
+      score++;
+      scoreText.setText("Score: " + score);
     } else if (keys.up.isDown && overItem.key == "up") {
-      console.log("Scored! +", score);
+      score++;
+      scoreText.setText("Score: " + score);
     }
   }
 }
