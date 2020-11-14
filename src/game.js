@@ -16,22 +16,21 @@ var config = {
   },
 };
 
-var arrows = ["up", "down", "left", "right"]; // VALORES PARA COMPARAR 
-var secuence = new Array(); // SECUENCIA A REPETIR 
+var arrows = ["up", "down", "left", "right"]; // VALORES PARA COMPARAR
+var secuence = new Array(); // SECUENCIA A REPETIR
 
 // ELEMENTOS RENDERIZABLES (FLECHAS)
-var up; 
+var up;
 var down;
 var right;
 var left;
-
 
 var game = new Phaser.Game(config);
 var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
 var score = 0;
 var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
 
-var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS 
+var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS
 var square; // INSTANCIA DEL CUADRADO, SOLO SE USA UNA
 
 var renderedElements = new Array(); // ELEMENTOS QUE HAN SIDO DIBUJADOS
@@ -57,7 +56,7 @@ function preload() {
   });
   this.load.image("background", "src/assets/background.jpg");
   this.load.image("square", "src/assets/square.png");
-  
+
   // this.load.spritesheet("square", "src/assets/square.png", {
   //   frameHeight: 256,
   //   frameWidth: 256,
@@ -70,7 +69,7 @@ function create() {
   console.log(square.getBounds());
   generateSecuence(secuence, 10);
   console.log(secuence);
-  console.log(getElementInSecuence());
+  // console.log(getElementInSecuence());
   keys = this.input.keyboard.createCursorKeys();
 }
 
@@ -124,9 +123,11 @@ function update() {
     console.log(renderedElements);
   }
 
-  for (let index = 0; index < renderedElements.length; index++) { // VERIFICA SI CADA UNO DE LOS ELEMENTOS SE SOBREPONE CON LA CAJA
+  for (let index = 0; index < renderedElements.length; index++) {
+    // VERIFICA SI CADA UNO DE LOS ELEMENTOS SE SOBREPONE CON LA CAJA
     const element = renderedElements[index];
-    if (this.physics.overlap(element.value, square)) { // FUNCION INTERNA DE PHASER PARA VERIFICAR OVERLAP
+    if (this.physics.overlap(element.value, square)) {
+      // FUNCION INTERNA DE PHASER PARA VERIFICAR OVERLAP
       console.log("OVERLAPED");
       over = true; // ALGUN ELEMENTO SE SOBREPONE
       overItem = element; // ELEMENTO SUPERPUESTO
@@ -135,7 +136,8 @@ function update() {
 
   if (over) {
     // console.log("OVER", overItem.key);
-    if (keys.left.isDown && overItem.key == "left") {  // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
+    if (keys.left.isDown && overItem.key == "left") {
+      // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
       score++;
       console.log("Scored! +", score);
     } else if (keys.right.isDown && overItem.key == "right") {
