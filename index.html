@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-  </head>
-  <body>
-    <script src="./src/game.js"></script>
-  </body>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+  <script src="./src/main.js"></script>
+  <script src="./src/game.js"></script>
+</head>
+
+<body>
+  <div id="gam"></div>
+  <script>
+    const config = {
+      type: Phaser.AUTO,
+      height: window.innerHeight,
+      width: window.innerWidth,
+      physics: {
+        default: "arcade",
+        arcade: {
+          gravity: { y: 0, x: -50 },
+          debug: false,
+        },
+      },
+      scene:[inicio,juego]
+    };
+    var game = new Phaser.Game(config);
+  </script>
+</body>
+
 </html>
