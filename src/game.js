@@ -2,12 +2,12 @@
 var up, down, left, right;
 
 var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
-
 //TEXTOS
 var score = 0;
+var oldScore = 0;
 var scoreText;
-var userName;
-var userNameText;
+var scoreEnemy = 0;
+var scoreTextEnemy;
 
 var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
 
@@ -51,7 +51,11 @@ var juego = new Phaser.Class({
     console.log(secuence);
     // console.log(getElementInSecuence());
     keys = this.input.keyboard.createCursorKeys();
-    scoreText = this.add.text(16, 16, "score: 0", {
+    scoreText = this.add.text(16, 16, "Your score: 0", {
+      font: "48px Consolas",
+      fill: "#FFF",
+    });
+    scoreTextEnemy = this.add.text(16, 64, "Your ENEMY score: 0", {
       font: "48px Consolas",
       fill: "#FFF",
     });
@@ -105,16 +109,16 @@ var juego = new Phaser.Class({
       if (keys.left.isDown && overItem.key == "left") {
         // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
         score++;
-        scoreText.setText("Score: " + score);
+        scoreText.setText("Your score: " + score);
       } else if (keys.right.isDown && overItem.key == "right") {
         score++;
-        scoreText.setText("Score: " + score);
+        scoreText.setText("Your score: " + score);
       } else if (keys.down.isDown && overItem.key == "down") {
         score++;
-        scoreText.setText("Score: " + score);
+        scoreText.setText("Your score: " + score);
       } else if (keys.up.isDown && overItem.key == "up") {
         score++;
-        scoreText.setText("Score: " + score);
+        scoreText.setText("Your score: " + score);
       }
     }
   },

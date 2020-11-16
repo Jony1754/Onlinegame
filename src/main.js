@@ -1,4 +1,8 @@
 let texto;
+let readyPlayer2;
+var player2;
+var player1;
+var playersArray = new Array();
 var inicio = new Phaser.Class({
   Extends: Phaser.Scene,
   initialize: function () {
@@ -10,18 +14,67 @@ var inicio = new Phaser.Class({
       font: "48px Consolas",
       fill: "#FFF",
     });
+
+    readyPlayer2 = this.add.text(16, 64, "Waiting...", {
+      font: "48px Consolas",
+      fill: "#FFF",
+    });
   },
   create: function () {
-    io();
-    this.time.addEvent({
-      delay: 3000,
-      loop: false,
-      callback: () => {
-        this.scene.start("juego");
-      },
+    var self = this;
+    this.socket = io();
+    this.socket.on("currentPlayers", function (players) {
+      Object.keys(players).forEach(function (id) {
+        console.log("Player id: ", players[id].playerId);
+        console.log("Self.socket.id", self.socket.id);
+        if (players[id].playerId === self.socket.id) {
+          addPlayer(self, players[id]);
+        } else {
+          addOtherPlayers(self, players[id]);
+        }
+      });
+    });
+    this.socket.on("newPlayer", function (playerInfo) {
+      addOtherPlayers(self, playerInfo);
+    });
+    this.socket.on("disconnect", function (playerId) {
+      self.otherPlayers.getChildren().forEach(function (otherPlayer) {
+        if (playerId == otherPlayer.playerId) {
+          otherPlayer.destroy();
+        }
+      });
     });
   },
   update: function () {
     texto.setText("Esperando jugador...");
+    if (player2) {
+      // console.log(player2);
+
+      readyPlayer2.setText("Player2 READY, game is loading...");
+      this.time.addEvent({
+        delay: 3000,
+        loop: false,
+        callback: () => {
+          playersArray.push(player1);
+          playersArray.push(player2);
+          this.scene.start("juego");
+        },
+      });
+      // this.scene.start("juego");
+    }
   },
 });
+
+function addPlayer(self, playerInfo) {
+  self.playerId = playerInfo.playerId;
+  self.score = playerInfo.score;
+  self.color = "blue";
+  player1 = self;
+}
+
+function addOtherPlayers(self, playerInfo) {
+  self.playerId = playerInfo.playerId;
+  self.score = playerInfo.score;
+  self.color = "red";
+  player2 = self;
+}
