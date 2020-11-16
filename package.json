@@ -4,7 +4,8 @@
   "description": "Primeros pasos del juego haciendo uso de la Phaser",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "JavaScript",
@@ -15,6 +16,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "phaser": "^3.24.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
+    "phaser": "^3.24.1",
+    "socket.io": "^3.0.1"
   }
 }

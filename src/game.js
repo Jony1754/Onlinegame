@@ -1,5 +1,5 @@
 // ELEMENTOS RENDERIZABLES (FLECHAS)
-var up,down,left,right;
+var up, down, left, right;
 
 var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
 
@@ -20,30 +20,30 @@ var overItem; // ELEMENTO ACTUALMENTE SUPERPUESTO CON EL CUADRADO
 
 var juego = new Phaser.Class({
   Extends: Phaser.Scene,
-  initialize: function(){
-    Phaser.Scene.call(this,{"key":"juego"});
+  initialize: function () {
+    Phaser.Scene.call(this, { key: "juego" });
   },
-  preload: function(){
-    this.load.spritesheet("arr-up", "src/assets/up-arrow.png", {
+  preload: function () {
+    this.load.spritesheet("arr-up", "assets/up-arrow.png", {
       frameWidth: 256,
       frameHeight: 256,
     });
-    this.load.spritesheet("arr-down", "src/assets/down-arrow.png", {
+    this.load.spritesheet("arr-down", "assets/down-arrow.png", {
       frameWidth: 256,
       frameHeight: 256,
     });
-    this.load.spritesheet("arr-right", "src/assets/right-arrow.png", {
+    this.load.spritesheet("arr-right", "assets/right-arrow.png", {
       frameWidth: 256,
       frameHeight: 256,
     });
-    this.load.spritesheet("arr-left", "src/assets/left-arrow.png", {
+    this.load.spritesheet("arr-left", "assets/left-arrow.png", {
       frameWidth: 256,
       frameHeight: 256,
     });
-    this.load.image("background", "src/assets/background.jpg");
-    this.load.image("square", "src/assets/square.png");  
+    this.load.image("background", "assets/background.jpg");
+    this.load.image("square", "assets/square.png");
   },
-  create: function(){
+  create: function () {
     squares = this.physics.add.staticGroup();
     square = squares.create(683, 384, "square").setScale(1.5).refreshBody();
     console.log(square.getBounds());
@@ -54,9 +54,9 @@ var juego = new Phaser.Class({
     scoreText = this.add.text(16, 16, "score: 0", {
       font: "48px Consolas",
       fill: "#FFF",
-    });    
+    });
   },
-  update: function(){
+  update: function () {
     if (secuence.length > 0) {
       const item = getElementInSecuence();
       let rendered;
@@ -65,13 +65,13 @@ var juego = new Phaser.Class({
           up = this.physics.add.sprite(2000 + xoffset, 384, "arr-up");
           xoffset += 384;
           rendered = { value: up, key: "up" };
-  
+
           break;
         case "down":
           down = this.physics.add.sprite(2000 + xoffset, 384, "arr-down");
           xoffset += 384;
           rendered = { value: down, key: "down" };
-  
+
           break;
         case "left":
           left = this.physics.add.sprite(2000 + xoffset, 384, "arr-left");
@@ -84,11 +84,11 @@ var juego = new Phaser.Class({
           rendered = { value: right, key: "right" };
           break;
       }
-      
+
       renderedElements.push(rendered); // AGREGA EL ELEMENTO A LA LISTA DE LA SECUENCIA RENDERIZADA EN PANTALLA
       console.log(renderedElements);
     }
-  
+
     for (let index = 0; index < renderedElements.length; index++) {
       // VERIFICA SI CADA UNO DE LOS ELEMENTOS SE SOBREPONE CON LA CAJA
       const element = renderedElements[index];
@@ -99,7 +99,7 @@ var juego = new Phaser.Class({
         overItem = element; // ELEMENTO SUPERPUESTO
       }
     }
-  
+
     if (over) {
       // console.log("OVER", overItem.key);
       if (keys.left.isDown && overItem.key == "left") {
@@ -116,12 +116,9 @@ var juego = new Phaser.Class({
         score++;
         scoreText.setText("Score: " + score);
       }
-    }    
-  }
-  
-})
-
-
+    }
+  },
+});
 
 var arrows = ["up", "down", "left", "right"]; // VALORES PARA COMPARAR
 var secuence = new Array(); // SECUENCIA A REPETIR
