@@ -16,7 +16,7 @@ var server = app.listen(app.get("port"), () => {
 //Websockets
 
 var SocketIO = require("socket.io");
-var io = SocketIO(server);
+let io = SocketIO(server);
 var players = {};
 
 io.on("connection", (socket) => {
@@ -24,7 +24,6 @@ io.on("connection", (socket) => {
   players[socket.id] = {
     playerId: socket.id,
     score: 0,
-    color: "",
   };
 
   socket.emit("currentPlayers", players);
@@ -38,10 +37,18 @@ io.on("connection", (socket) => {
     // emit a message to all players to remove this player
     io.emit("disconnect", socket.id);
   });
-  socket.on("enemyScore", function (score) {
+
+  //Se escucha el evento que posiblemente active uno de los jugadores
+  socket.on("playerScored", function (score) {
     players[socket.id].score = score;
 
-    socket.broadcast.emit("playerScored", players[socket.id]);
+    // Se avisa al otro jugador QUIEN ha hecho la puntuacion
+    // El objeto entre {} se lee dentro de la otra funcion como "data"
+    socket.broadcast.emit("playerScore", {
+      player: players[socket.id],
+      otherPlayers: players,
+    });
   });
+
   console.log("Players connected", players);
 });

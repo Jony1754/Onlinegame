@@ -4,10 +4,9 @@ var up, down, left, right;
 var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
 //TEXTOS
 var score = 0;
-var oldScore = 0;
+var oldScore = 0; //Almacena la puntuacion anterior para verificar si algo ha cambiado y disparar el evento en el server
 var scoreText;
-var scoreEnemy = 0;
-var scoreTextEnemy;
+var scoreTextEnemy; // MANEJA EL OUTPUT DE LA PUNTUACION DEL ENEMIGO
 
 var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
 
@@ -22,6 +21,11 @@ var juego = new Phaser.Class({
   Extends: Phaser.Scene,
   initialize: function () {
     Phaser.Scene.call(this, { key: "juego" });
+  },
+
+  init: function (data) {
+    // LOS DATOS RECIBIDOS UNA VEZ SE LLAMA LA ESCENA DESDE MAIN.JS
+    this.socket = data.socket; // Se almacena una REFERENCIA a la variable que maneja el socket en cada instancia del juego
   },
   preload: function () {
     this.load.spritesheet("arr-up", "assets/up-arrow.png", {
@@ -46,10 +50,7 @@ var juego = new Phaser.Class({
   create: function () {
     squares = this.physics.add.staticGroup();
     square = squares.create(683, 384, "square").setScale(1.5).refreshBody();
-    console.log(square.getBounds());
     generateSecuence(secuence, 10);
-    console.log(secuence);
-    // console.log(getElementInSecuence());
     keys = this.input.keyboard.createCursorKeys();
     scoreText = this.add.text(16, 16, "Your score: 0", {
       font: "48px Consolas",
@@ -57,7 +58,16 @@ var juego = new Phaser.Class({
     });
     scoreTextEnemy = this.add.text(16, 64, "Your ENEMY score: 0", {
       font: "48px Consolas",
-      fill: "#FFF",
+      fill: "red",
+    });
+
+    console.log(`Socket en instancia: ${this.socket.id} `); // COMPRUEBA QUE CADA SOCKET ES DISTINTO
+
+    this.socket.on("playerScore", function (data) {
+      // Se dispara este evento cuando el otro jugador ha puntuado y el jugador envia sus datos de puntuacion por lo que aqui se debe 
+      // configurar su marcador
+      // console.log("data logged on the listening event playerScore", data); 
+      scoreTextEnemy.setText("Your ENEMY score: " + data.player.score);
     });
   },
   update: function () {
@@ -98,14 +108,14 @@ var juego = new Phaser.Class({
       const element = renderedElements[index];
       if (this.physics.overlap(element.value, square)) {
         // FUNCION INTERNA DE PHASER PARA VERIFICAR OVERLAP
-        console.log("OVERLAPED");
         over = true; // ALGUN ELEMENTO SE SOBREPONE
         overItem = element; // ELEMENTO SUPERPUESTO
       }
     }
 
     if (over) {
-      // console.log("OVER", overItem.key);
+      oldScore = score; // Al
+
       if (keys.left.isDown && overItem.key == "left") {
         // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
         score++;
@@ -119,6 +129,11 @@ var juego = new Phaser.Class({
       } else if (keys.up.isDown && overItem.key == "up") {
         score++;
         scoreText.setText("Your score: " + score);
+      }
+      //La puntuacion cambio, hay que avisar al servidor 
+      if (oldScore !== score) {
+        // console.log({ prevScore: oldScore, actualScore: score });
+        this.socket.emit("playerScored", score);
       }
     }
   },

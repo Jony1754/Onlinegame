@@ -2,7 +2,6 @@ let texto;
 let readyPlayer2;
 var player2;
 var player1;
-var playersArray = new Array();
 var inicio = new Phaser.Class({
   Extends: Phaser.Scene,
   initialize: function () {
@@ -24,10 +23,13 @@ var inicio = new Phaser.Class({
     var self = this;
     this.socket = io();
     this.socket.on("currentPlayers", function (players) {
+      console.log("CURRENT PLAYERS EVENT: ", players);
+
       Object.keys(players).forEach(function (id) {
         console.log("Player id: ", players[id].playerId);
         console.log("Self.socket.id", self.socket.id);
-        if (players[id].playerId === self.socket.id) {
+
+        if (players[id].playerId == self.socket.id) {
           addPlayer(self, players[id]);
         } else {
           addOtherPlayers(self, players[id]);
@@ -55,9 +57,8 @@ var inicio = new Phaser.Class({
         delay: 3000,
         loop: false,
         callback: () => {
-          playersArray.push(player1);
-          playersArray.push(player2);
-          this.scene.start("juego");
+          // Cuando se llama a la otra escena, se le pasa una referencia del socket a ESTA instancia del juego
+          this.scene.start("juego", { socket: this.socket });
         },
       });
       // this.scene.start("juego");
@@ -68,13 +69,11 @@ var inicio = new Phaser.Class({
 function addPlayer(self, playerInfo) {
   self.playerId = playerInfo.playerId;
   self.score = playerInfo.score;
-  self.color = "blue";
   player1 = self;
 }
 
 function addOtherPlayers(self, playerInfo) {
   self.playerId = playerInfo.playerId;
   self.score = playerInfo.score;
-  self.color = "red";
   player2 = self;
 }
