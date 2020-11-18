@@ -28,28 +28,28 @@ var juego = new Phaser.Class({
     this.socket = data.socket; // Se almacena una REFERENCIA a la variable que maneja el socket en cada instancia del juego
   },
   preload: function () {
-    this.load.spritesheet("arr-up", "assets/up-arrow.png", {
-      frameWidth: 256,
-      frameHeight: 256,
+    this.load.spritesheet("arr-up", "assets/images/up.png", {
+      frameWidth: 160,
+      frameHeight: 160,
     });
-    this.load.spritesheet("arr-down", "assets/down-arrow.png", {
-      frameWidth: 256,
-      frameHeight: 256,
+    this.load.spritesheet("arr-down", "assets/images/down.png", {
+      frameWidth: 160,
+      frameHeight: 160,
     });
-    this.load.spritesheet("arr-right", "assets/right-arrow.png", {
-      frameWidth: 256,
-      frameHeight: 256,
+    this.load.spritesheet("arr-right", "assets/images/right.png", {
+      frameWidth: 160,
+      frameHeight: 160,
     });
-    this.load.spritesheet("arr-left", "assets/left-arrow.png", {
-      frameWidth: 256,
-      frameHeight: 256,
+    this.load.spritesheet("arr-left", "assets/images/left.png", {
+      frameWidth: 160,
+      frameHeight: 160,
     });
     this.load.image("background", "assets/background.jpg");
-    this.load.image("square", "assets/square.png");
+    this.load.image("square", "assets/images/square.png");
   },
   create: function () {
     squares = this.physics.add.staticGroup();
-    square = squares.create(683, 384, "square").setScale(1.5).refreshBody();
+    square = squares.create(199+60, 231+60, "square");
     generateSecuence(secuence, 10);
     keys = this.input.keyboard.createCursorKeys();
     scoreText = this.add.text(16, 16, "Your score: 0", {
@@ -76,25 +76,25 @@ var juego = new Phaser.Class({
       let rendered;
       switch (item) {
         case "up":
-          up = this.physics.add.sprite(2000 + xoffset, 384, "arr-up");
-          xoffset += 384;
+          up = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-up");
+          xoffset += 231+60;
           rendered = { value: up, key: "up" };
 
           break;
         case "down":
-          down = this.physics.add.sprite(2000 + xoffset, 384, "arr-down");
-          xoffset += 384;
+          down = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-down");
+          xoffset += 231+60;
           rendered = { value: down, key: "down" };
 
           break;
         case "left":
-          left = this.physics.add.sprite(2000 + xoffset, 384, "arr-left");
-          xoffset += 384;
+          left = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-left");
+          xoffset += 231+60;
           rendered = { value: left, key: "left" };
           break;
         case "right":
-          right = this.physics.add.sprite(2000 + xoffset, 384, "arr-right");
-          xoffset += 384;
+          right = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-right");
+          xoffset += 231+60;
           rendered = { value: right, key: "right" };
           break;
       }
