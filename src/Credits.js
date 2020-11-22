@@ -9,6 +9,9 @@ class Credits extends Phaser.Scene {
 
         var despX=0, despY=20; 
 
+        var clickSoundEnter = this.sound.add('clickSoundEnter');
+        clickSoundEnter.play();
+
         this.mainMenu = this.add.image(400+despX,300+despY,"mainMenu");
 
         this.logo = this.add.image(400,195,"logo");
@@ -26,7 +29,7 @@ class Credits extends Phaser.Scene {
         closeBtn.input.alwaysEnabled = true;
       
         closeBtn.on("pointerover", function(event) {
-            this.setTint(0x00cc15);
+            this.setTint(0x16F02A);
         });
       
         closeBtn.on("pointerout", function(event) {

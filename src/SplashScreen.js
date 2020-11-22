@@ -9,13 +9,19 @@ class SplashScreen extends Phaser.Scene {
       this.load.image("creditsScreen", "assets/images/creditsScreen.png");
       this.load.image("creditosR", "assets/images/creditosResaltado.png");
       this.load.image("closeBtn", "assets/images/closeBtn.png")
-      this.load.image("closeAnim", "assets/images/closeAnim.png");
+      this.load.image("closeAnim", "assets/images/closeAnim.png");   
+      this.load.audio('clickSoundEnter', ['assets/audio/clickSoundEnter.ogg']);
+      this.load.audio('clickSoundExit', ['assets/audio/clickSoundExit.ogg']);
    }
 
      create ()
     {
 
         var despX=0, despY=20;
+
+        var splashSound = this.sound.add('splashSound');
+
+     splashSound.play();
 
 
     this.mainMenu = this.add.image(400+despX,300+despY,"mainMenu");

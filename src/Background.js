@@ -6,6 +6,7 @@ class Background extends Phaser.Scene {
     preload (){
        this.load.image("background", "assets/images/background.png");
        this.load.image("logo", "assets/images/logo.png");
+       this.load.audio('splashSound', ['assets/audio/splashSound.mp3']);
     }
 
      create ()

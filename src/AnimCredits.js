@@ -9,7 +9,8 @@ class AnimCredits extends Phaser.Scene {
 
         var despX=0, despY=20; 
 
-        
+        var clickSoundExit = this.sound.add('clickSoundExit');
+        clickSoundExit.play();
 
         this.creditsScreen = this.add.image(400,300,"creditsScreen");
         this.closeAnim = this.add.image(400,300,"closeAnim");
