@@ -1,3 +1,4 @@
+const { Console } = require("console");
 var express = require("express");
 var path = require("path");
 var app = express();
@@ -18,13 +19,16 @@ var server = app.listen(app.get("port"), () => {
 var SocketIO = require("socket.io");
 let io = SocketIO(server);
 var players = {};
-
+var rooms = new Array();
 io.on("connection", (socket) => {
   console.log("Alguien se ha conectado", socket.id);
   players[socket.id] = {
     playerId: socket.id,
     score: 0,
   };
+
+  console.log("ROOMS: ", rooms);
+  console.log("Players length", Object.keys(players).length);
 
   socket.emit("currentPlayers", players);
   // update all other players of the new player
@@ -50,5 +54,9 @@ io.on("connection", (socket) => {
     });
   });
 
-  console.log("Players connected", players);
+  if (Object.keys(players).length == 2) {
+    rooms.push(players);
+    players = {};
+  }
+  // console.log("Players connected", players);
 });

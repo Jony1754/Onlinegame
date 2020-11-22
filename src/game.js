@@ -49,7 +49,7 @@ var juego = new Phaser.Class({
   },
   create: function () {
     squares = this.physics.add.staticGroup();
-    square = squares.create(199+60, 231+60, "square");
+    square = squares.create(199 + 60, 231 + 60, "square");
     generateSecuence(secuence, 10);
     keys = this.input.keyboard.createCursorKeys();
     scoreText = this.add.text(16, 16, "Your score: 0", {
@@ -64,9 +64,9 @@ var juego = new Phaser.Class({
     console.log(`Socket en instancia: ${this.socket.id} `); // COMPRUEBA QUE CADA SOCKET ES DISTINTO
 
     this.socket.on("playerScore", function (data) {
-      // Se dispara este evento cuando el otro jugador ha puntuado y el jugador envia sus datos de puntuacion por lo que aqui se debe 
+      // Se dispara este evento cuando el otro jugador ha puntuado y el jugador envia sus datos de puntuacion por lo que aqui se debe
       // configurar su marcador
-      // console.log("data logged on the listening event playerScore", data); 
+      // console.log("data logged on the listening event playerScore", data);
       scoreTextEnemy.setText("Your ENEMY score: " + data.player.score);
     });
   },
@@ -76,25 +76,29 @@ var juego = new Phaser.Class({
       let rendered;
       switch (item) {
         case "up":
-          up = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-up");
-          xoffset += 231+60;
+          up = this.physics.add.sprite(2000 + xoffset, 231 + 60, "arr-up");
+          xoffset += 231 + 60;
           rendered = { value: up, key: "up" };
 
           break;
         case "down":
-          down = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-down");
-          xoffset += 231+60;
+          down = this.physics.add.sprite(2000 + xoffset, 231 + 60, "arr-down");
+          xoffset += 231 + 60;
           rendered = { value: down, key: "down" };
 
           break;
         case "left":
-          left = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-left");
-          xoffset += 231+60;
+          left = this.physics.add.sprite(2000 + xoffset, 231 + 60, "arr-left");
+          xoffset += 231 + 60;
           rendered = { value: left, key: "left" };
           break;
         case "right":
-          right = this.physics.add.sprite(2000 + xoffset, 231+60, "arr-right");
-          xoffset += 231+60;
+          right = this.physics.add.sprite(
+            2000 + xoffset,
+            231 + 60,
+            "arr-right"
+          );
+          xoffset += 231 + 60;
           rendered = { value: right, key: "right" };
           break;
       }
@@ -130,7 +134,7 @@ var juego = new Phaser.Class({
         score++;
         scoreText.setText("Your score: " + score);
       }
-      //La puntuacion cambio, hay que avisar al servidor 
+      //La puntuacion cambio, hay que avisar al servidor
       if (oldScore !== score) {
         // console.log({ prevScore: oldScore, actualScore: score });
         this.socket.emit("playerScored", score);
