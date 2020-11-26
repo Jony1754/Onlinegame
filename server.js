@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
     // remove this player from our players object
     delete players[socket.id];
     // emit a message to all players to remove this player
-    io.emit("disconnect", socket.id);
+    io.emit("disconnected", socket.id);
   });
 
   //Se escucha el evento que posiblemente active uno de los jugadores
@@ -50,5 +50,5 @@ io.on("connection", (socket) => {
     });
   });
 
-  console.log("Players connected", players);
+  console.log("Players connected (SERVER EVENT)", players);
 });
