@@ -7,14 +7,14 @@ var score = 0;
 var oldScore = 0; //Almacena la puntuacion anterior para verificar si algo ha cambiado y disparar el evento en el server
 var scoreText;
 var scoreTextEnemy; // MANEJA EL OUTPUT DE LA PUNTUACION DEL ENEMIGO
-
+var lastArrow;
 var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
-
+var v=0;
 var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS
 var square; // INSTANCIA DEL CUADRADO, SOLO SE USA UNA
 let fle=0;
 var renderedElements = new Array(); // ELEMENTOS QUE HAN SIDO DIBUJADOS
-var over = false;
+var over = true;
 var overItem; // ELEMENTO ACTUALMENTE SUPERPUESTO CON EL CUADRADO
 
 var juego = new Phaser.Class({
@@ -113,9 +113,12 @@ var juego = new Phaser.Class({
         // FUNCION INTERNA DE PHASER PARA VERIFICAR OVERLAP
         over = true; // ALGUN ELEMENTO SE SOBREPONE
         overItem = element; // ELEMENTO SUPERPUESTO
+        if(index==renderedElements.length-1){
+          over = false;
+        }
       }
     }
-
+    
     if (over) {
       oldScore = score; // Al
       if (keys.left.isDown) {
@@ -165,13 +168,9 @@ var juego = new Phaser.Class({
         // console.log({ prevScore: oldScore, actualScore: score });
         this.socket.emit("playerScored", score);
       }
-    }else if(!over && (keys.up.isDown||keys.down.isDown||keys.right.isDown||keys.left.isDown)){
-      score--;
-      scoreText.setText("Your score: " + score);
-      if (oldScore !== score) {
-        // console.log({ prevScore: oldScore, actualScore: score });
-        this.socket.emit("playerScored", score);
-      }
+    }else{
+      howYouDoing.setText("Se acabó");
+      setTimeout(this.scene.start("resultados"), 5000);
     }
   },
 });
