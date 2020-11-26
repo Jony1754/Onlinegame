@@ -2,23 +2,31 @@ var express = require("express");
 var path = require("path");
 var app = express();
 
-//settings
+/**
+ * Se crea una instancia de express y se la asignamos a la variable app. En app recibimos el puerto en donde se ubicará
+ * el servidor, ya sea el puerto 3000 o el que reciba de Herokuapp.
+ */
 app.set("port", process.env.PORT || 3000);
 
 //static files: archivos que se envian una sola vez al navegador
 console.log(path.join(__dirname, "src"));
 app.use(express.static(path.join(__dirname, "src")));
-//Iniciar el servidor
+/**
+ * Se inicializa el servidor.
+ */
 var server = app.listen(app.get("port"), () => {
   console.log("Server on port", app.get("port"));
 });
-
-//Websockets
-
+/**
+ * Se crea una instacia de socket.io.
+ */
 var SocketIO = require("socket.io");
 let io = SocketIO(server);
 var players = {};
-
+/**
+ * Desde aquí se escuchan los eventos del socket, desde que hay un nuevo jugador, hasta las desconexiones que se puedan 
+ * presentar durante la ejecución 
+ */
 io.on("connection", (socket) => {
   console.log("Alguien se ha conectado", socket.id);
   players[socket.id] = {
@@ -27,14 +35,14 @@ io.on("connection", (socket) => {
   };
 
   socket.emit("currentPlayers", players);
-  // update all other players of the new player
+  // Actualiza los eventos al resto de jugadores, de que alguien ha llegado.
   socket.broadcast.emit("newPlayer", players[socket.id]);
 
   socket.on("disconnect", function () {
     console.log("user disconnected");
-    // remove this player from our players object
+    // Remueve a los otros jugadores del socket
     delete players[socket.id];
-    // emit a message to all players to remove this player
+    // Emite el mensaje de que alguien se ha desconectado.
     io.emit("disconnected", socket.id);
   });
 

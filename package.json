@@ -2,10 +2,11 @@
   "name": "unnamed_game",
   "version": "1.0.0",
   "description": "Primeros pasos del juego haciendo uso de la Phaser",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "keywords": [
     "JavaScript",
@@ -17,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
     "phaser": "^3.24.1",
     "socket.io": "^3.0.1"
