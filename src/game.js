@@ -7,14 +7,14 @@ var score = 0;
 var oldScore = 0; //Almacena la puntuacion anterior para verificar si algo ha cambiado y disparar el evento en el server
 var scoreText;
 var scoreTextEnemy; // MANEJA EL OUTPUT DE LA PUNTUACION DEL ENEMIGO
-
+var lastArrow;
 var xoffset = 0; // DISTANCIA ENTRE CADA ELEMENTO RENDERIZADO
-
+var v=0;
 var squares; // STATIC GROUP, PERMITE MANTENER INSTANCIAS DE ELEMENTOS
 var square; // INSTANCIA DEL CUADRADO, SOLO SE USA UNA
-
+let fle=0;
 var renderedElements = new Array(); // ELEMENTOS QUE HAN SIDO DIBUJADOS
-var over = false;
+var over = true;
 var overItem; // ELEMENTO ACTUALMENTE SUPERPUESTO CON EL CUADRADO
 var gameEnd = false;
 
@@ -62,7 +62,10 @@ var juego = new Phaser.Class({
       font: "48px Consolas",
       fill: "red",
     });
-
+    howYouDoing = this.add.text(400, 300, "", {
+      font: "36px Consolas",
+      fill: "#FFF",
+    });
     console.log(`Socket en instancia: ${this.socket.id} `); // COMPRUEBA QUE CADA SOCKET ES DISTINTO
 
     this.socket.on("playerScore", function (data) {
@@ -126,31 +129,64 @@ var juego = new Phaser.Class({
         // FUNCION INTERNA DE PHASER PARA VERIFICAR OVERLAP
         over = true; // ALGUN ELEMENTO SE SOBREPONE
         overItem = element; // ELEMENTO SUPERPUESTO
+        if(index==renderedElements.length-1){
+          over = false;
+        }
       }
     }
-
+    
     if (over) {
       oldScore = score; // Al
-
-      if (keys.left.isDown && overItem.key == "left") {
+      if (keys.left.isDown) {
         // MIENTRAS SUPERPUESTO, VERIFICA SI LA TECLA ES IGUAL
-        score++;
-        scoreText.setText("Your score: " + score);
-      } else if (keys.right.isDown && overItem.key == "right") {
-        score++;
-        scoreText.setText("Your score: " + score);
-      } else if (keys.down.isDown && overItem.key == "down") {
-        score++;
-        scoreText.setText("Your score: " + score);
-      } else if (keys.up.isDown && overItem.key == "up") {
-        score++;
-        scoreText.setText("Your score: " + score);
+        if(overItem.key == "left"){
+          score++;
+          howYouDoing.setText("¡Excelente!");
+          scoreText.setText("Your score: " + score);
+        }else{
+          score--;
+          howYouDoing.setText("Así no eh");
+          scoreText.setText("Your score: " + score);
+        }
+      } else if (keys.right.isDown) {
+        if(overItem.key == "right"){
+          score++;
+          howYouDoing.setText("¡Excelente!");
+          scoreText.setText("Your score: " + score);
+        }else{
+          score--;
+          howYouDoing.setText("Así no eh");
+          scoreText.setText("Your score: " + score);
+        }
+      } else if (keys.down.isDown) {
+        if(overItem.key == "down"){
+          score++;
+          howYouDoing.setText("¡Excelente!");
+          scoreText.setText("Your score: " + score);
+        }else{
+          score--;
+          howYouDoing.setText("Así no eh");
+          scoreText.setText("Your score: " + score);
+        }
+      } else if (keys.up.isDown) {
+        if(overItem.key == "up"){
+          score++;
+          howYouDoing.setText("¡Excelente!");
+          scoreText.setText("Your score: " + score);
+        }else{
+          score--;
+          howYouDoing.setText("Así no eh");
+          scoreText.setText("Your score: " + score);
+        }
       }
       //La puntuacion cambio, hay que avisar al servidor
       if (oldScore !== score) {
         // console.log({ prevScore: oldScore, actualScore: score });
         this.socket.emit("playerScored", score);
       }
+    }else{
+      howYouDoing.setText("Se acabó");
+      setTimeout(this.scene.start("resultados"), 5000);
     }
   },
 });
