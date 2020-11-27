@@ -70,7 +70,7 @@ var juego = new Phaser.Class({
     this.scene.launch("gameMusic");
     squares = this.physics.add.staticGroup();
     square = squares.create(400, 231 + 60, "square");
-    generateSecuence(secuence, 10);
+    generateSecuence(secuence, 75);
     keys = this.input.keyboard.createCursorKeys();
     scoreText = this.add.text(16, 16, "Tú: 0", {
       font: "44px Consolas",
@@ -232,7 +232,7 @@ var juego = new Phaser.Class({
     }else{
       howYouDoing.setText("Se acabó");
       this.time.addEvent({
-        delay: 2000,
+        delay: 3000,
         loop: false,
         callback: () => {
           this.scene.start("resultados", { myScore: score, enemyScore: enemyScore });

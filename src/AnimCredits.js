@@ -68,7 +68,7 @@ class AnimCredits extends Phaser.Scene {
             duration    : 250
         });
 
-        //Animación credits apareciéndose
+        //Animación credits desapareciéndose
         tween = this.tweens.add({
             targets     : [this.creditsScreen,this.closeAnim],
             scale       : {

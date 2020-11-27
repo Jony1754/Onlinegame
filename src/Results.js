@@ -29,28 +29,28 @@ class resultados extends Phaser.Scene {
     }
 
 
-    this.add.text(247, 250, "Tu puntuación:", {
-      font: "40px Consolas",
+    this.add.text(255, 250, "Tu puntuación:", {
+      font: "35px Consolas",
       fill: "#FFF",
       align: 'center'
     });
 
     var myScoreText = this.add.text(385, 290, myScore, {
-      font: "45px Consolas",
+      font: "40px Consolas",
       fill: "#FFF",
       align: 'center'
     });
 
 
-    this.add.text(227, 350, "La de tu enemigo:", {
-      font: "40px Consolas",
+    this.add.text(235, 350, "La de tu enemigo:", {
+      font: "35px Consolas",
       fill: "#FFF",
       align: "center"
     });
 
 
     var enemyScoreText = this.add.text(385, 390, enemyScore, {
-      font: "45px Consolas",
+      font: "40px Consolas",
       fill: "#FFF",
       align: "center"
     });

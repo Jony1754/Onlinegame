@@ -34,7 +34,7 @@ class MainMenu extends Phaser.Scene {
 
     jugarR.on("pointerup", function (pointer) {
       this.setAlpha(1);
-      menu.scene.start("inicio");
+      menu.scene.start("animCarga");
     });
 
     var creditosR = this.add

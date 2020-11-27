@@ -11,6 +11,7 @@
         <script type="text/javascript" src="MainMenu.js"></script>
         <script type="text/javascript" src="Credits.js"></script>
         <script type="text/javascript" src="AnimCredits.js"></script>
+        <script type="text/javascript" src="AnimCarga.js"></script>
         <script type="text/javascript" src="AnimAcierto.js"></script>
         <script type="text/javascript" src="AnimDesacierto.js"></script>
         <script type="text/javascript" src="Results.js"></script>
@@ -25,11 +26,11 @@
                 physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { y: 0, x: -50 },
+                    gravity: { y: 0, x: -8 },
                     debug: false,
                 }
             },
-                scene: [Background, SplashScreen, MainMenu, Credits, AnimCredits, inicio, juego, PreloadMusic, MenuMusic, GameMusic, resultados, AnimAcierto]
+                scene: [Background, SplashScreen, MainMenu, Credits, AnimCredits, inicio, juego, PreloadMusic, MenuMusic, GameMusic, AnimCarga, resultados, AnimAcierto]
             }    
 
             var game = new Phaser.Game(config);

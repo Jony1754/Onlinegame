@@ -8,8 +8,5 @@ class PreloadMusic extends Phaser.Scene {
         this.load.audio('gameMusic', ['assets/audio/music/gameMusic.wav']);
     }
 
-
-    
-
 }
 

@@ -12,7 +12,7 @@ class AnimAcierto extends Phaser.Scene {
         
         this.tweens.add({
             targets     : this.square,
-            ease        : 'Power4',
+            ease        : 'Linear',
             alpha: {
                 getStart: () => 1,
                 getEnd: () => 0
