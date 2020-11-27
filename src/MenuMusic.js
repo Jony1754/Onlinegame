@@ -11,6 +11,7 @@ class MenuMusic extends Phaser.Scene {
         menuMusic.play();
     
 }
+
 }
 
   

@@ -14,14 +14,14 @@ class SplashScreen extends Phaser.Scene {
       this.load.image("ganaste", "assets/images/ganaste.png");   
       this.load.image("perdiste", "assets/images/perdiste.png");   
       this.load.image("empate", "assets/images/empate.png");
-     // this.load.font("kenney", "assets/fonts/Kenney_Future.ttf");   
+  //  this.load.font("kenney", "assets/fonts/Kenney_Future.ttf");   
       this.load.image("botonMenuPrincipal", "assets/images/botonMenuPrincipal.png");   
       this.load.audio('clickSoundEnter', ['assets/audio/clickSoundEnter.ogg']);
       this.load.audio('clickSoundExit', ['assets/audio/clickSoundExit.ogg']);
       this.load.audio('aciertoSound', ['assets/audio/aciertoSound.wav']);
       this.load.audio('desaciertoSound', ['assets/audio/desaciertoSound.wav']);
       this.load.audio('menuMusic', ['assets/audio/music/menuMusic.wav']);
-      this.load.audio('menuMusic', ['assets/audio/music/gameMusic.wav']);
+      this.load.audio('gameMusic', ['assets/audio/music/gameMusic.wav']);
    }
 
      create ()

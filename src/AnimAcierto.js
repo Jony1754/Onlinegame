@@ -5,14 +5,14 @@ class AnimAcierto extends Phaser.Scene {
 
      create ()
     {
-        this.square = this.add.image(199+60, 231+60, "square");
+        this.square = this.add.image(400, 231+60, "square");
         var aciertoSound = this.sound.add('aciertoSound', {volume: 0.3});
         aciertoSound.play();
 
         
         this.tweens.add({
             targets     : this.square,
-            ease        : 'Linear',
+            ease        : 'Power4',
             alpha: {
                 getStart: () => 1,
                 getEnd: () => 0

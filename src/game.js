@@ -69,20 +69,24 @@ var juego = new Phaser.Class({
     this.game.sound.stopAll();
     this.scene.launch("gameMusic");
     squares = this.physics.add.staticGroup();
-    square = squares.create(199 + 60, 231 + 60, "square");
+    square = squares.create(400, 231 + 60, "square");
     generateSecuence(secuence, 10);
     keys = this.input.keyboard.createCursorKeys();
-    scoreText = this.add.text(16, 16, "Your score: 0", {
-      font: "48px Consolas",
+    scoreText = this.add.text(16, 16, "Tú: 0", {
+      font: "44px Consolas",
+      fill: "#fc035e",
+      stroke: "#fc035e",
+      strokeThickness: 1,
+    });
+    scoreTextEnemy = this.add.text(16, 64, "Tu enemigo: 0", {
+      font: "44px Consolas",
       fill: "#FFF",
+      
     });
-    scoreTextEnemy = this.add.text(16, 64, "Your ENEMY score: 0", {
-      font: "48px Consolas",
-      fill: "red",
-    });
-    howYouDoing = this.add.text(400, 300, "", {
+    howYouDoing = this.add.text(305, 170, "", {
       font: "36px Consolas",
       fill: "#FFF",
+      
     });
     console.log(`Socket en instancia: ${this.socket.id} `); // COMPRUEBA QUE CADA SOCKET ES DISTINTO
 
@@ -90,7 +94,7 @@ var juego = new Phaser.Class({
       /**
        * Se escribe la puntuación del otro usuario
        */
-      scoreTextEnemy.setText("Your ENEMY score: " + data.player.score);
+      scoreTextEnemy.setText("Tu enemigo: " + data.player.score);
       enemyScore = data.player.score;
     });
 
@@ -176,46 +180,46 @@ var juego = new Phaser.Class({
         if(overItem.key == "left"){
           score++;
           howYouDoing.setText("¡Excelente!");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
           this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
         }
       } else if (keys.right.isDown) {
         if(overItem.key == "right"){
           score++;
           howYouDoing.setText("¡Excelente!");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
           this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
 
         }
       } else if (keys.down.isDown) {
         if(overItem.key == "down"){
           score++;
           howYouDoing.setText("¡Excelente!");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
           this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
         }
       } else if (keys.up.isDown) {
         if(overItem.key == "up"){
           score++;
           howYouDoing.setText("¡Excelente!");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
           this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
-          scoreText.setText("Your score: " + score);
+          scoreText.setText("Tú: " + score);
         }
       }
       /**

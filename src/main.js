@@ -17,20 +17,36 @@ var inicio = new Phaser.Class({
    * Se colocan textos en la pantalla.
    */
   preload: function () {
-    texto = this.add.text(16, 16, "Inicio", {
+    texto = this.add.text(180, 280, "Inicio", {
       font: "48px Consolas",
       fill: "#FFF",
     });
 
-    readyPlayer2 = this.add.text(16, 64, "Waiting...", {
-      font: "48px Consolas",
-      fill: "#FFF",
-    });
+  
   },
   /**
    * Se revisan que eventos está recibiendo el socket.
    */
   create: function () {
+
+    this.tweens.add({
+      targets     : texto,
+      ease        : 'Power4',
+      alpha       : {
+          getStart: () => 0.8,
+          getEnd: () => 1
+      },
+      y           :{
+        getStart: () => 285,
+        getEnd: () => 255
+      },
+      loop: -1,
+      yoyo: -1,
+      duration    : 1000,
+    });
+
+
+
     var self = this;
     this.socket = io();
     console.log(" AAAAAAAI AM THIS SOCKET: ", this.socket);
@@ -65,7 +81,7 @@ var inicio = new Phaser.Class({
   update: function () {
     texto.setText("Esperando jugador...");
     if (letsPlay) {
-      readyPlayer2.setText("Player2 READY, game is loading...");
+      texto.setText("¡Listo! Cargando...");
       this.time.addEvent({
         delay: 3000,
         loop: false,
