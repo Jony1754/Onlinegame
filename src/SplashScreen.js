@@ -1,17 +1,24 @@
 class SplashScreen extends Phaser.Scene {
     constructor(){
-        super("SplashScreen");
+        super("splashScreen");
     }
 
     preload (){
       this.load.image("mainMenu", "assets/images/mainMenu.png");
       this.load.image("jugarR", "assets/images/jugarResaltado.png");
       this.load.image("creditsScreen", "assets/images/creditsScreen.png");
+      this.load.image("resultsScreen", "assets/images/resultsScreen.png");
       this.load.image("creditosR", "assets/images/creditosResaltado.png");
       this.load.image("closeBtn", "assets/images/closeBtn.png")
       this.load.image("closeAnim", "assets/images/closeAnim.png");   
+      this.load.image("ganaste", "assets/images/ganaste.png");   
+      this.load.image("perdiste", "assets/images/perdiste.png");   
+      this.load.image("empate", "assets/images/empate.png");   
+      this.load.image("botonMenuPrincipal", "assets/images/botonMenuPrincipal.png");   
       this.load.audio('clickSoundEnter', ['assets/audio/clickSoundEnter.ogg']);
       this.load.audio('clickSoundExit', ['assets/audio/clickSoundExit.ogg']);
+      this.load.audio('aciertoSound', ['assets/audio/aciertoSound.wav']);
+      this.load.audio('desaciertoSound', ['assets/audio/desaciertoSound.wav']);
    }
 
      create ()
@@ -19,7 +26,7 @@ class SplashScreen extends Phaser.Scene {
 
         var despX=0, despY=20;
 
-        var splashSound = this.sound.add('splashSound');
+        var splashSound = this.sound.add('splashSound', {volume: 1});
 
      splashSound.play();
 
@@ -77,12 +84,25 @@ class SplashScreen extends Phaser.Scene {
         duration    : 800,
         
       });
-      
+
+
+      this.scene.launch("preloadMusic");
+
+
+      this.time.addEvent({
+        delay: 3000,
+        loop: false,
+        callback: () => {
+              this.scene.launch("menuMusic");
+        }  
+    })
+
       this.time.addEvent({
           delay: 3800,
           loop: false,
           callback: () => {
-              this.scene.start("mainMenu");
+                this.scene.remove("splashScreen");
+                this.scene.start("mainMenu");
           }  
       })
       

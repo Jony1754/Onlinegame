@@ -7,6 +7,7 @@ var up, down, left, right;
 var keys; // MANEJADOR DE EVENTOS DEL TECLADO EN PHASER
 //TEXTOS
 var score = 0;
+var enemyScore = 0;
 var oldScore = 0; //Almacena la puntuacion anterior para verificar si algo ha cambiado y disparar el evento en el server
 var scoreText;
 var scoreTextEnemy; // MANEJA EL OUTPUT DE LA PUNTUACION DEL ENEMIGO
@@ -65,6 +66,8 @@ var juego = new Phaser.Class({
    * Se ubican los puntajes y el cuadrado que controla que exista una colisión con las flechas que se despliegan en el juego.
    */
   create: function () {
+    this.game.sound.stopAll();
+    this.scene.launch("gameMusic");
     squares = this.physics.add.staticGroup();
     square = squares.create(199 + 60, 231 + 60, "square");
     generateSecuence(secuence, 10);
@@ -88,6 +91,7 @@ var juego = new Phaser.Class({
        * Se escribe la puntuación del otro usuario
        */
       scoreTextEnemy.setText("Your ENEMY score: " + data.player.score);
+      enemyScore = data.player.score;
     });
 
     this.socket.on("disconnected", function (playerId) {
@@ -173,6 +177,7 @@ var juego = new Phaser.Class({
           score++;
           howYouDoing.setText("¡Excelente!");
           scoreText.setText("Your score: " + score);
+          this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
@@ -183,16 +188,19 @@ var juego = new Phaser.Class({
           score++;
           howYouDoing.setText("¡Excelente!");
           scoreText.setText("Your score: " + score);
+          this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
           scoreText.setText("Your score: " + score);
+
         }
       } else if (keys.down.isDown) {
         if(overItem.key == "down"){
           score++;
           howYouDoing.setText("¡Excelente!");
           scoreText.setText("Your score: " + score);
+          this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
@@ -203,6 +211,7 @@ var juego = new Phaser.Class({
           score++;
           howYouDoing.setText("¡Excelente!");
           scoreText.setText("Your score: " + score);
+          this.scene.launch("animAcierto");
         }else{
           score--;
           howYouDoing.setText("Así no eh");
@@ -218,7 +227,13 @@ var juego = new Phaser.Class({
       }
     }else{
       howYouDoing.setText("Se acabó");
-      setTimeout(this.scene.start("resultados"), 5000);
+      this.time.addEvent({
+        delay: 2000,
+        loop: false,
+        callback: () => {
+          this.scene.start("resultados", { myScore: score, enemyScore: enemyScore });
+        }  
+    })
     }
   },
 });
@@ -228,6 +243,7 @@ var secuence = new Array(); // SECUENCIA A REPETIR
 /**
  * Se toma un elemento de la secuencia.
  */
+
 function getElementInSecuence() {
   return secuence.shift();
 }

@@ -9,7 +9,7 @@ class Credits extends Phaser.Scene {
 
         var despX=0, despY=20; 
 
-        var clickSoundEnter = this.sound.add('clickSoundEnter');
+        var clickSoundEnter = this.sound.add('clickSoundEnter', {volume: 0.5});
         clickSoundEnter.play();
 
         this.mainMenu = this.add.image(400+despX,300+despY,"mainMenu");

@@ -14,7 +14,7 @@ class Background extends Phaser.Scene {
 
     this.background = this.add.image(0,0,"background");
     this.background.setOrigin(0,0);
-    this.scene.launch("SplashScreen");
+    this.scene.launch("splashScreen");
     
 }
 }

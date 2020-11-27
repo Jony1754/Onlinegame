@@ -5,12 +5,17 @@
         <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="Background.js"></script>
         <script type="text/javascript" src="SplashScreen.js"></script>
+        <script type="text/javascript" src="PreloadMusic.js"></script>
+        <script type="text/javascript" src="MenuMusic.js"></script>
+        <script type="text/javascript" src="gameMusic.js"></script>
         <script type="text/javascript" src="MainMenu.js"></script>
         <script type="text/javascript" src="Credits.js"></script>
         <script type="text/javascript" src="AnimCredits.js"></script>
+        <script type="text/javascript" src="AnimAcierto.js"></script>
+        <script type="text/javascript" src="AnimDesacierto.js"></script>
+        <script type="text/javascript" src="Results.js"></script>
         <script type="text/javascript" src="main.js"></script>
         <script type="text/javascript" src="game.js"></script>
-        <script type="text/javascript" src="Results.js"></script>
         
         <script>
             var config = {
@@ -24,7 +29,7 @@
                     debug: false,
                 }
             },
-                scene: [Background, SplashScreen, MainMenu, Credits, resultados, AnimCredits, inicio, juego]
+                scene: [Background, SplashScreen, MainMenu, Credits, AnimCredits, inicio, juego, PreloadMusic, MenuMusic, GameMusic, resultados, AnimAcierto]
             }    
 
             var game = new Phaser.Game(config);
